@@ -295,13 +295,6 @@ function MainApp() {
   return (
     <>
       <div
-        role="note"
-        aria-label="تنبيه حول طبيعة التطبيق"
-        className="fixed top-[env(safe-area-inset-top,4px)] left-1/2 -translate-x-1/2 z-[80] rounded-full bg-[#FFF4CC] px-3 py-1 text-[11px] font-medium text-[#684D00] shadow-sm whitespace-nowrap"
-      >
-        تجربة توضيحية غير رسمية — لا تنفّذ تحويلات مالية حقيقية
-      </div>
-      <div
       dir="rtl"
       style={
         lockedMobileHeight
