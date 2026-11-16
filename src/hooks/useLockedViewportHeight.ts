@@ -4,14 +4,18 @@ function isFormControlFocused(): boolean {
   if (typeof document === 'undefined') return false;
   const active = document.activeElement;
   if (!active) return false;
-  const tag = active.tagName;
-  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+  return ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName);
+}
+
+function keyboardIsOpen(): boolean {
+  const viewport = window.visualViewport;
+  return Boolean(viewport && window.innerHeight - viewport.height > 120);
 }
 
 /**
- * Locks the mobile viewport height to the full screen height before the soft keyboard opens.
- * Prevents WebViews / Chrome Custom Tabs / browsers from shrinking the layout height on input focus
- * and pushing bottom action bars (إرسال / أتمم / طلب / التالي) into the middle of the screen.
+ * Keep the app's full-height layout stable while Android's soft keyboard opens.
+ * The visual viewport can resize before the input receives focus, so focus state
+ * alone is not sufficient to decide whether the app shell should shrink.
  */
 export function useLockedViewportHeight(): number | null {
   const [lockedHeight, setLockedHeight] = useState<number | null>(() => {
@@ -22,67 +26,59 @@ export function useLockedViewportHeight(): number | null {
   useEffect(() => {
     let blurTimer: number | null = null;
 
-    const syncFullHeight = (forceWhenFocused = false) => {
+    const syncFullHeight = (force = false) => {
       if (window.innerWidth >= 1024) {
         setLockedHeight(null);
         return;
       }
 
-      const currentInnerHeight = window.innerHeight;
-
-      setLockedHeight((prev) => {
-        if (prev === null || forceWhenFocused) {
-          return currentInnerHeight;
-        }
-        // Only shrink the locked viewport height when NO input is focused (keyboard closed / orientation settled).
-        if (!isFormControlFocused()) {
-          return currentInnerHeight;
-        }
-        // If viewport grew (keyboard closed while element retained focus or browser toolbar hid), expand to match.
-        if (currentInnerHeight > prev) {
-          return currentInnerHeight;
-        }
-        return prev;
+      const nextHeight = window.innerHeight;
+      setLockedHeight((previous) => {
+        if (previous === null) return nextHeight;
+        if (!force && (isFormControlFocused() || keyboardIsOpen())) return previous;
+        return nextHeight;
       });
     };
 
-    const handleResize = () => {
-      syncFullHeight(false);
-    };
-
+    const handleResize = () => syncFullHeight(false);
     const handleOrientationChange = () => {
-      window.setTimeout(() => {
-        syncFullHeight(true);
-      }, 180);
+      window.setTimeout(() => syncFullHeight(true), 250);
     };
-
-    const handleFocusOut = () => {
+    const handleFocusIn = () => {
       if (blurTimer !== null) {
         window.clearTimeout(blurTimer);
+        blurTimer = null;
       }
+    };
+    const handleFocusOut = () => {
+      if (blurTimer !== null) window.clearTimeout(blurTimer);
       blurTimer = window.setTimeout(() => {
-        if (!isFormControlFocused()) {
+        if (!isFormControlFocused() && !keyboardIsOpen()) {
           syncFullHeight(true);
           if (window.scrollY > 0) {
             window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
           }
         }
-      }, 140);
+      }, 180);
     };
 
+    const visualViewport = window.visualViewport;
     syncFullHeight(true);
-
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleOrientationChange);
+    document.addEventListener('focusin', handleFocusIn);
     document.addEventListener('focusout', handleFocusOut);
+    visualViewport?.addEventListener('resize', handleResize);
+    visualViewport?.addEventListener('scroll', handleResize);
 
     return () => {
-      if (blurTimer !== null) {
-        window.clearTimeout(blurTimer);
-      }
+      if (blurTimer !== null) window.clearTimeout(blurTimer);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleOrientationChange);
+      document.removeEventListener('focusin', handleFocusIn);
       document.removeEventListener('focusout', handleFocusOut);
+      visualViewport?.removeEventListener('resize', handleResize);
+      visualViewport?.removeEventListener('scroll', handleResize);
     };
   }, []);
 
