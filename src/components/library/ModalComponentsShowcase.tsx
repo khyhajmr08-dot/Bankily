@@ -1,115 +1,158 @@
 import React from 'react';
 
 const styles = `
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
   .component-showcase {
     min-height: 100svh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 32px;
-    padding: 24px;
-    background: #f3f5f7;
-    font-family: Arial, sans-serif;
+    gap: 40px;
+    padding: 20px;
+    background: #000;
+    font-family: 'Cairo', sans-serif;
   }
 
+  .component-showcase,
   .component-showcase * { box-sizing: border-box; }
 
-  .component-modal {
-    width: min(100%, 340px);
-    padding: 30px 24px 24px;
-    border-radius: 18px;
+  .component-otp-modal {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    padding: 24px 20px;
+    border-radius: 8px;
     background: #fff;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, .10);
     text-align: center;
   }
 
-  .component-modal-title {
-    margin: 0 0 28px;
+  .component-close {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #999;
+    font: inherit;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .component-otp-title {
+    margin: 10px 0 24px;
     color: #333;
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 600;
   }
 
-  .component-code-illustration {
+  .component-otp-slots {
     display: flex;
     justify-content: center;
-    gap: 17px;
-    margin: 0 auto 30px;
+    gap: 16px;
+    margin-bottom: 24px;
   }
 
-  .component-code-slot {
-    width: 43px;
-    height: 48px;
+  .component-otp-slot {
+    width: 35px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 2px solid #00bcd4;
+    border-bottom: 2px solid #ccc;
   }
 
-  .component-code-dot {
-    width: 11px;
-    height: 11px;
+  .component-otp-slot.is-active { border-bottom-color: #00bcd4; }
+
+  .component-otp-dot {
+    width: 8px;
+    height: 8px;
+    margin-bottom: 5px;
     border-radius: 50%;
-    background: #333;
+    background: #000;
   }
 
   .component-primary-button {
     width: 100%;
     min-height: 48px;
+    padding: 12px;
     border: 0;
-    border-radius: 9px;
+    border-radius: 4px;
     background: #00bcd4;
     color: #fff;
+    font-family: inherit;
     font-size: 16px;
     font-weight: 600;
     cursor: default;
   }
 
-  .component-success-icon {
-    width: 66px;
-    height: 66px;
-    margin: 0 auto 20px;
+  .component-status-modal {
+    width: 100%;
+    max-width: 360px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #fff;
+    text-align: center;
+  }
+
+  .component-status-content { padding: 30px 20px 20px; }
+
+  .component-status-title {
+    margin: 0 0 24px;
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .component-status-icon {
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 auto 16px;
+    border: 3px solid #4caf50;
     border-radius: 50%;
-    background: #e8f5e9;
     color: #4caf50;
-    font-size: 35px;
-    font-weight: 700;
+    font-size: 30px;
+    line-height: 1;
   }
 
-  .component-success-title {
-    margin: 0 0 24px;
+  .component-status-details {
+    margin-bottom: 20px;
     color: #333;
-    font-size: 21px;
-    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.8;
+    text-align: center;
   }
 
-  .component-details {
-    margin-bottom: 26px;
-    padding: 16px;
-    border-radius: 10px;
-    background: #f8f9fa;
-    text-align: right;
-  }
-
-  .component-detail-row {
+  .component-status-meta {
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #e8e8e8;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 20px;
     color: #757575;
-    font-size: 14px;
+    font-size: 13px;
   }
 
-  .component-detail-row:last-child { border-bottom: 0; }
-  .component-detail-value { color: #333; font-weight: 600; }
+  .component-status-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px;
+    border: 0;
+    background: #00bcd4;
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: default;
+  }
 
-  @media (max-width: 420px) {
-    .component-showcase { align-content: center; padding: 18px; gap: 20px; }
+  @media (max-width: 380px) {
+    .component-showcase { gap: 24px; padding: 16px; }
   }
 `;
 
@@ -118,42 +161,40 @@ export function ModalComponentsShowcase() {
     <>
       <style>{styles}</style>
       <main className="component-showcase" dir="rtl">
-        <section className="component-modal" aria-labelledby="component-pin-title">
-          <h2 id="component-pin-title" className="component-modal-title">
+        <section className="component-otp-modal" aria-labelledby="component-otp-title">
+          <button className="component-close" type="button" aria-label="إغلاق" tabIndex={-1}>
+            ×
+          </button>
+          <h2 id="component-otp-title" className="component-otp-title">
             الرجاء إدخال الرمز السري
           </h2>
-          <div className="component-code-illustration" aria-hidden="true">
-            {Array.from({ length: 4 }, (_, index) => (
-              <div className="component-code-slot" key={index}>
-                <span className="component-code-dot" />
-              </div>
-            ))}
+          <div className="component-otp-slots" aria-hidden="true">
+            <div className="component-otp-slot"><span className="component-otp-dot" /></div>
+            <div className="component-otp-slot"><span className="component-otp-dot" /></div>
+            <div className="component-otp-slot"><span className="component-otp-dot" /></div>
+            <div className="component-otp-slot is-active" />
           </div>
           <button className="component-primary-button" type="button" tabIndex={-1}>
             متابعة
           </button>
         </section>
 
-        <section className="component-modal" aria-labelledby="component-success-title">
-          <div className="component-success-icon" aria-hidden="true">✓</div>
-          <h2 id="component-success-title" className="component-success-title">
-            تم بنجاح
-          </h2>
-          <div className="component-details">
-            <div className="component-detail-row">
-              <span>معرّف العنصر</span>
-              <span className="component-detail-value">123</span>
+        <section className="component-status-modal" aria-labelledby="component-status-title">
+          <div className="component-status-content">
+            <h2 id="component-status-title" className="component-status-title">
+              تم بنجاح
+            </h2>
+            <div className="component-status-icon" aria-hidden="true">✓</div>
+            <div className="component-status-details">
+              اكتملت العملية المطلوبة
             </div>
-            <div className="component-detail-row">
-              <span>الوصف</span>
-              <span className="component-detail-value">عنصر محفوظ</span>
-            </div>
-            <div className="component-detail-row">
-              <span>التاريخ</span>
-              <span className="component-detail-value">الآن</span>
+            <div className="component-status-meta">
+              <span>معرّف العنصر: 123</span>
+              <span>الحالة: مكتمل</span>
+              <span>التاريخ والوقت: الآن</span>
             </div>
           </div>
-          <button className="component-primary-button" type="button" tabIndex={-1}>
+          <button className="component-status-button" type="button" tabIndex={-1}>
             تم
           </button>
         </section>
