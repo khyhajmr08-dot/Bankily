@@ -86,7 +86,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
   return (
     <div className="flex flex-col flex-1 h-full min-h-0 bg-[#FAFAFA]">
       {/* Top Turquoise Header + 4 Horizontal Tabs (120dp total height) */}
-      <header className="bg-[#00BCD5] text-white shrink-0">
+      <header className="bg-[#00BCD4] text-white shrink-0">
         <div className="relative h-[55px] flex items-center justify-center px-3">
           <button
             type="button"
@@ -112,8 +112,8 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
                 role="tab"
                 className={`h-full pt-1.5 pb-1.5 px-1 flex flex-col items-center justify-center gap-1 border-b-[3px] transition-colors focus-visible:outline-2 focus-visible:outline-white ${
                   isSelected
-                    ? 'border-white text-white font-medium'
-                    : 'border-transparent text-white/80 hover:bg-white/5'
+                    ? 'border-[#FFC107] text-white font-medium opacity-100'
+                    : 'border-transparent text-white/70 hover:bg-white/5'
                 }`}
               >
                 {renderTabIcon(tab.id, isSelected)}
@@ -130,14 +130,14 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
           {/* Recipient Field per Selected Tab */}
           {draft.method === 'phone' && (
             <div>
-              <label htmlFor="input-phone" className="block text-[15px] text-[#171717] mb-2">
+              <label htmlFor="input-phone" className="block text-[14px] text-[#757575] mb-2">
                 رقم الهاتف
               </label>
               <div
-                className={`flex items-center justify-between gap-2 pb-1.5 border-b transition-colors ${
+                className={`flex items-center justify-between gap-2 pb-3 border-b transition-colors ${
                   errors.recipient
                     ? 'border-[#D32F2F] border-b-[1.5px]'
-                    : 'border-[#555555] focus-within:border-[#111111] focus-within:border-b-[2px]'
+                    : 'border-[#333333] focus-within:border-[#111111] focus-within:border-b-[1px]'
                 }`}
               >
                 <input
