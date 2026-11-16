@@ -65,7 +65,7 @@ export const TransferConfirmationScreen: React.FC<TransferConfirmationScreenProp
 
           {/* Recipient Row */}
           <div className="flex items-center gap-3 mb-4 px-1">
-            <div className="w-[44px] h-[44px] rounded-full bg-[#596978] flex items-center justify-center shrink-0">
+            <div className="w-[40px] h-[40px] rounded-full bg-[#596978] flex items-center justify-center shrink-0">
               {renderMethodIcon()}
             </div>
             <div className="min-w-0">
