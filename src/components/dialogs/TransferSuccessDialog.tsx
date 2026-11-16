@@ -20,11 +20,12 @@ export const TransferSuccessDialog: React.FC<TransferSuccessDialogProps> = ({
       aria-modal="true"
       aria-labelledby="success-dialog-title"
     >
-      <div className="bg-white w-full max-w-[306px] rounded-[4px] shadow-2xl overflow-hidden">
+      <div className="bg-white w-full max-w-[360px] rounded-[4px] shadow-2xl overflow-hidden">
         <div className="px-2.5 pt-5 pb-4 flex flex-col items-center text-center">
+          <p className="mb-3 rounded-full bg-[#FFF8E1] px-3 py-1 text-[11px] font-semibold text-[#795548]">معاينة واجهة فقط — لم يتم تنفيذ تحويل مالي</p>
           {/* Top Title */}
           <h2 id="success-dialog-title" className="text-[17px] font-normal text-[#171717] mb-4">
-            النقل ناجح!
+            معاينة تفاصيل التحويل
           </h2>
 
           {/* Large Green Checkmark Circle */}
