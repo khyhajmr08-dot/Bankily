@@ -14,24 +14,34 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
   const [digits, setDigits] = useState<string[]>(['', '', '', '']);
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [keyboardInset, setKeyboardInset] = useState(0);
+  const [visibleViewport, setVisibleViewport] = useState<{ top: number; height: number } | null>(null);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv) return;
 
-    const updateInset = () => {
-      const covered = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
-      setKeyboardInset(covered > 80 ? covered : 0);
+    // Keep the dialog centered in the actually visible area above Android's keyboard.
+    // Capture the layout height before the keyboard opens because some browsers
+    // also resize window.innerHeight while the visual viewport is changing.
+    const layoutHeight = window.innerHeight;
+    const updateVisibleViewport = () => {
+      const keyboardOpen = layoutHeight - vv.height - vv.offsetTop > 120;
+      setVisibleViewport(
+        keyboardOpen
+          ? { top: Math.max(0, Math.round(vv.offsetTop)), height: Math.round(vv.height) }
+          : null
+      );
     };
 
-    updateInset();
-    vv.addEventListener('resize', updateInset);
-    vv.addEventListener('scroll', updateInset);
+    updateVisibleViewport();
+    vv.addEventListener('resize', updateVisibleViewport);
+    vv.addEventListener('scroll', updateVisibleViewport);
+    window.addEventListener('resize', updateVisibleViewport);
     return () => {
-      vv.removeEventListener('resize', updateInset);
-      vv.removeEventListener('scroll', updateInset);
+      vv.removeEventListener('resize', updateVisibleViewport);
+      vv.removeEventListener('scroll', updateVisibleViewport);
+      window.removeEventListener('resize', updateVisibleViewport);
     };
   }, []);
 
@@ -130,8 +140,10 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
 
   return (
     <div
-      style={keyboardInset > 0 ? { paddingBottom: `${keyboardInset + 16}px` } : undefined}
-      className="absolute inset-0 z-50 bg-black/60 flex items-center justify-center p-4 transition-[padding] duration-150"
+      style={visibleViewport
+        ? { top: `${visibleViewport.top}px`, height: `${visibleViewport.height}px` }
+        : { top: 0, bottom: 0 }}
+      className="absolute left-0 right-0 z-50 bg-black/60 flex items-center justify-center p-4 transition-[top,height] duration-100"
       role="dialog"
       aria-modal="true"
       aria-labelledby="pin-dialog-title"
