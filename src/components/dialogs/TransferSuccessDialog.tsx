@@ -29,7 +29,7 @@ export const TransferSuccessDialog: React.FC<TransferSuccessDialogProps> = ({
 
           {/* Large Green Checkmark Circle */}
           <div className="mb-5">
-            <SuccessCheckCircleIcon className="w-[68px] h-[68px]" />
+            <SuccessCheckCircleIcon className="w-[60px] h-[60px]" />
           </div>
 
           {/* Transfer Summary Details matching Gallery_9ab03982 single-line layout */}
@@ -76,7 +76,7 @@ export const TransferSuccessDialog: React.FC<TransferSuccessDialogProps> = ({
             </span>
             <StarIcon
               filled={transaction.isFavorite}
-              className={`w-7 h-7 transition-all ${
+              className={`w-[22px] h-[22px] transition-all ${
                 transaction.isFavorite ? 'text-[#FEC107] scale-110' : 'text-[#9E9E9E]'
               }`}
             />
