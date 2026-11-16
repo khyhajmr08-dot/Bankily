@@ -29,7 +29,7 @@ export const TransferSuccessDialog: React.FC<TransferSuccessDialogProps> = ({
 
           {/* Large Green Checkmark Circle */}
           <div className="mb-5">
-            <SuccessCheckCircleIcon className="w-[68px] h-[68px]" />
+            <SuccessCheckCircleIcon className="w-[60px] h-[60px]" />
           </div>
 
           {/* Transfer Summary Details matching Gallery_9ab03982 single-line layout */}
