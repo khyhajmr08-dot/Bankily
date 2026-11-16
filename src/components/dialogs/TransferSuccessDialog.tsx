@@ -24,7 +24,7 @@ export const TransferSuccessDialog: React.FC<TransferSuccessDialogProps> = ({
         <div className="px-2.5 pt-5 pb-4 flex flex-col items-center text-center">
           {/* Top Title */}
           <h2 id="success-dialog-title" className="text-[17px] font-normal text-[#171717] mb-4">
-            اكتملت العملية
+            النقل ناجح!
           </h2>
 
           {/* Large Green Checkmark Circle */}
