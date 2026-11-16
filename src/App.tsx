@@ -5,6 +5,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { DesktopCompanionPanel } from './components/DesktopCompanionPanel';
+import { ModalComponentsShowcase } from './components/library/ModalComponentsShowcase';
 import { PinVerificationDialog } from './components/dialogs/PinVerificationDialog';
 import { TransferSuccessDialog } from './components/dialogs/TransferSuccessDialog';
 import { OfflineIndicator } from './components/pwa/OfflineIndicator';
@@ -38,7 +39,7 @@ const STORAGE_KEY_GROUPS = 'mauritop_sim_groups_v1';
 const STORAGE_KEY_REQUESTS = 'mauritop_sim_requests_v1';
 const STORAGE_KEY_PWA_INSTALLED = 'bankily_pwa_installed_v1';
 
-export default function App() {
+function MainApp() {
   const [screen, setScreen] = useState<AppScreen>(() => {
     if (typeof window === 'undefined') return 'home';
     const action = new URLSearchParams(window.location.search).get('action');
@@ -459,4 +460,13 @@ export default function App() {
     </div>
     </>
   );
+}
+
+
+export default function App() {
+  const isComponentShowcase =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('components') === '1';
+
+  return isComponentShowcase ? <ModalComponentsShowcase /> : <MainApp />;
 }
