@@ -87,7 +87,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
     <div className="flex flex-col flex-1 h-full min-h-0 bg-[#FAFAFA]">
       {/* Top Turquoise Header + 4 Horizontal Tabs (120dp total height) */}
       <header className="bg-[#00BCD5] text-white shrink-0">
-        <div className="relative h-[52px] flex items-center justify-center px-3">
+        <div className="relative h-[44px] flex items-center justify-center px-3">
           <button
             type="button"
             onClick={onBack}
@@ -100,7 +100,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
         </div>
 
         {/* 4 Tabs in exact RTL order: رقم الهاتف, اسم المستخدم, بنك, فيسبوك */}
-        <nav aria-label="طريقة اختيار المستلم" className="grid grid-cols-4 h-[68px]">
+        <nav aria-label="طريقة اختيار المستلم" className="grid grid-cols-4 h-[62px]">
           {TABS.map((tab) => {
             const isSelected = draft.method === tab.id;
             return (
