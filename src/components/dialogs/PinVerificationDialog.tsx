@@ -11,145 +11,91 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const [digits, setDigits] = useState<string[]>(['', '', '', '']);
+  const [pin, setPin] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [visibleViewport, setVisibleViewport] = useState<{ top: number; height: number } | null>(null);
-  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+  const [visibleViewport, setVisibleViewport] = useState({ top: 0, height: 0 });
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
+  // Match Android's resize-on-keyboard behavior: the dialog is centered in the
+  // visible viewport, not the original full-height page behind the keyboard.
   useEffect(() => {
     const vv = window.visualViewport;
-    if (!vv) return;
-
-    // Keep the dialog centered in the actually visible area above Android's keyboard.
-    // Capture the layout height before the keyboard opens because some browsers
-    // also resize window.innerHeight while the visual viewport is changing.
-    const layoutHeight = window.innerHeight;
-    const updateVisibleViewport = () => {
-      const keyboardOpen = layoutHeight - vv.height - vv.offsetTop > 120;
-      setVisibleViewport(
-        keyboardOpen
-          ? { top: Math.max(0, Math.round(vv.offsetTop)), height: Math.round(vv.height) }
-          : null
-      );
+    const update = () => {
+      setVisibleViewport({
+        top: vv?.offsetTop ?? 0,
+        height: vv?.height ?? window.innerHeight,
+      });
     };
-
-    updateVisibleViewport();
-    vv.addEventListener('resize', updateVisibleViewport);
-    vv.addEventListener('scroll', updateVisibleViewport);
-    window.addEventListener('resize', updateVisibleViewport);
+    update();
+    vv?.addEventListener('resize', update);
+    vv?.addEventListener('scroll', update);
+    window.addEventListener('resize', update);
     return () => {
-      vv.removeEventListener('resize', updateVisibleViewport);
-      vv.removeEventListener('scroll', updateVisibleViewport);
-      window.removeEventListener('resize', updateVisibleViewport);
+      vv?.removeEventListener('resize', update);
+      vv?.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
     };
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      inputRefs.current[0]?.focus();
-    }, 60);
-    return () => clearTimeout(timer);
+    const timer = window.setTimeout(() => inputRef.current?.focus(), 120);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !isSubmitting) {
-        onClose();
-      }
+      if (e.key === 'Escape' && !isSubmitting) onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose, isSubmitting]);
 
-  const handleDigitChange = (index: number, rawValue: string) => {
+  const handleChange = (raw: string) => {
     if (isSubmitting) return;
-    const onlyDigits = rawValue.replace(/\D/g, '');
-
-    // Handle pasting full 4 digits
-    if (onlyDigits.length > 1) {
-      const next = ['', '', '', ''];
-      for (let i = 0; i < 4; i++) {
-        next[i] = onlyDigits[i] ?? '';
-      }
-      setDigits(next);
-      setErrorMsg('');
-      const focusIdx = Math.min(onlyDigits.length, 3);
-      inputRefs.current[focusIdx]?.focus();
-      return;
-    }
-
-    const next = [...digits];
-    next[index] = onlyDigits;
-    setDigits(next);
+    setPin(raw.replace(/\\D/g, '').slice(0, 4));
     if (errorMsg) setErrorMsg('');
-
-    if (onlyDigits && index < 3) {
-      inputRefs.current[index + 1]?.focus();
-    }
-  };
-
-  const handleDigitKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isSubmitting) return;
-    if (e.key === 'Backspace') {
-      if (digits[index]) {
-        const next = [...digits];
-        next[index] = '';
-        setDigits(next);
-      } else if (index > 0) {
-        const next = [...digits];
-        next[index - 1] = '';
-        setDigits(next);
-        inputRefs.current[index - 1]?.focus();
-      }
-      e.preventDefault();
-    } else if (e.key === 'ArrowLeft' && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    } else if (e.key === 'ArrowRight' && index < 3) {
-      inputRefs.current[index + 1]?.focus();
-    } else if (e.key === 'Enter') {
-      handleSubmit();
-    }
   };
 
   const handleSubmit = () => {
     if (isSubmitting) return;
-    const pin = digits.join('');
-
-    if (pin.length < 4) {
-      setErrorMsg('الرجاء إدخال الرمز السري المكون من 4 أرقام');
-      const firstEmpty = digits.findIndex((d) => !d);
-      inputRefs.current[firstEmpty >= 0 ? firstEmpty : 0]?.focus();
+    if (pin.length !== 4) {
+      setErrorMsg('الرجاء إدخال الرمز السري');
+      inputRef.current?.focus();
       return;
     }
-
     if (pin !== ACCESS_PIN) {
       setErrorMsg('الرمز السري غير صحيح');
-      setDigits(['', '', '', '']);
-      setTimeout(() => inputRefs.current[0]?.focus(), 30);
+      setPin('');
+      inputRef.current?.focus();
       return;
     }
-
     setIsSubmitting(true);
     setErrorMsg('');
-    setTimeout(() => {
+    window.setTimeout(() => {
       setIsSubmitting(false);
       onSuccess();
     }, 900);
   };
 
+  const activeSlot = Math.min(pin.length, 3);
+  const viewportHeight = visibleViewport.height || window.innerHeight;
+
   return (
     <div
-      style={visibleViewport
-        ? { top: `${visibleViewport.top}px`, height: `${visibleViewport.height}px` }
-        : { top: 0, bottom: 0 }}
-      className="absolute left-0 right-0 z-50 bg-black/60 flex items-center justify-center p-4 transition-[top,height] duration-100"
+      style={{
+        top: visibleViewport.top,
+        height: viewportHeight,
+      }}
+      className="absolute inset-x-0 z-50 bg-black/60 flex items-center justify-center px-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="pin-dialog-title"
     >
-      <div className="bg-white w-[177px] rounded-[4px] shadow-2xl overflow-hidden">
-        {/* Top-Right Close X Icon */}
+      <div
+        className="relative bg-white w-[177px] rounded-[4px] shadow-2xl overflow-hidden"
+        style={{ transform: 'translateY(-11%)' }}
+      >
         <div className="flex justify-start px-0.5 pt-0.5">
           <button
             type="button"
@@ -162,7 +108,6 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
           </button>
         </div>
 
-        {/* Title */}
         <h2
           id="pin-dialog-title"
           className="text-[13.5px] font-normal text-[#171717] text-center px-2 pt-1 pb-5 whitespace-nowrap"
@@ -170,24 +115,40 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
           الرجاء إدخال الرمز السري
         </h2>
 
-        {/* 4 Separate Digit Positions (LTR numeric order, 24px width, 14px gap matching Bankily_42e2251e) */}
-        <div dir="ltr" className="flex items-center justify-center gap-[14px] px-2 pb-5">
-          {digits.map((digit, index) => (
+        {/* One hidden numeric field mirrors the original Android dialog.
+            The four visible slots are presentation only, so focus never jumps
+            between separate inputs while the phone keyboard is open. */}
+        <div
+          dir="ltr"
+          className="relative flex items-center justify-center gap-[14px] px-2 pb-5"
+          onClick={() => inputRef.current?.focus()}
+        >
+          <input
+            ref={inputRef}
+            type="password"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            autoComplete="off"
+            enterKeyHint="done"
+            maxLength={4}
+            value={pin}
+            onChange={(e) => handleChange(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSubmit();
+              }
+            }}
+            aria-label="الرمز السري المكون من أربعة أرقام"
+            className="absolute left-1/2 top-1/2 h-px w-px -translate-x-1/2 -translate-y-1/2 opacity-0"
+          />
+          {Array.from({ length: 4 }, (_, index) => (
             <div key={index} className="relative w-[24px] h-[28px] flex items-center justify-center">
-              <input
-                ref={(el) => {
-                  inputRefs.current[index] = el;
-                }}
-                type="password"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                autoComplete="one-time-code"
-                maxLength={4}
-                aria-label={`الرقم ${index + 1} من الرمز السري`}
-                value={digit}
-                onChange={(e) => handleDigitChange(index, e.target.value)}
-                onKeyDown={(e) => handleDigitKeyDown(index, e)}
-                className="w-full h-full text-center text-[19px] font-bold text-[#171717] bg-transparent border-b border-[#222222] focus:border-[#00BCD5] focus:border-b-[2px] outline-none caret-[#00BCD5] tabular-nums"
+              <span className="absolute -top-0.5 text-[24px] leading-none font-bold text-[#171717]">
+                {index < pin.length ? '•' : ''}
+              </span>
+              <span
+                className={`absolute bottom-0 w-full ${index === activeSlot ? 'h-[2px] bg-[#00BCD5]' : 'h-px bg-[#222222]'}`}
               />
             </div>
           ))}
@@ -199,7 +160,6 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
           </p>
         )}
 
-        {/* Full-Width Bottom Turquoise Submit Button (54dp) */}
         <button
           type="button"
           onClick={handleSubmit}
