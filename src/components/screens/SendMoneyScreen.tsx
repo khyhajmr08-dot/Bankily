@@ -87,7 +87,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
     <div className="flex flex-col flex-1 h-full min-h-0 bg-[#FAFAFA]">
       {/* Top Turquoise Header + 4 Horizontal Tabs (120dp total height) */}
       <header className="bg-[#00BCD5] text-white shrink-0">
-        <div className="relative h-[44px] flex items-center justify-center px-3">
+        <div className="relative h-[55px] flex items-center justify-center px-3">
           <button
             type="button"
             onClick={onBack}
@@ -100,7 +100,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
         </div>
 
         {/* 4 Tabs in exact RTL order: رقم الهاتف, اسم المستخدم, بنك, فيسبوك */}
-        <nav aria-label="طريقة اختيار المستلم" className="grid grid-cols-4 h-[62px]">
+        <nav aria-label="طريقة اختيار المستلم" className="grid grid-cols-4 h-[66px]">
           {TABS.map((tab) => {
             const isSelected = draft.method === tab.id;
             return (
@@ -126,7 +126,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
 
       {/* Form Shell: Scrollable Content Region + Fixed Bottom Action Bar */}
       <form onSubmit={handleSubmit} noValidate className="flex-1 min-h-0 flex flex-col bg-[#FAFAFA]">
-        <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-6 pb-8 space-y-7">
+        <div className="flex-1 min-h-0 overflow-y-auto px-[20.5px] pt-7 pb-8 space-y-7">
           {/* Recipient Field per Selected Tab */}
           {draft.method === 'phone' && (
             <div>
@@ -360,7 +360,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
         <div className="shrink-0 bg-[#FEC107]">
           <button
             type="submit"
-            className="w-full h-[53px] bg-[#FEC107] hover:bg-[#F2B700] active:bg-[#E5AD00] text-white text-[18px] font-normal flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-[#171717]"
+            className="w-full h-[38px] bg-[#FFC107] hover:bg-[#F2B700] active:bg-[#E5AD00] text-white text-[18px] font-normal flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-[#171717]"
           >
             إرسال
           </button>
