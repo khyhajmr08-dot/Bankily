@@ -44,7 +44,7 @@ export const TransferConfirmationScreen: React.FC<TransferConfirmationScreenProp
   return (
     <div className="flex flex-col flex-1 h-full min-h-0 bg-[#FAFAFA]">
       {/* Top Turquoise Header (53dp) */}
-      <header className="bg-[#00BCD5] text-white shrink-0">
+      <header className="bg-[#00BCD4] text-white shrink-0">
         <div className="relative h-[53px] flex items-center justify-center px-3">
           <button
             type="button"
@@ -82,7 +82,7 @@ export const TransferConfirmationScreen: React.FC<TransferConfirmationScreenProp
           </div>
 
           {/* Light Gray Rounded Information Card (#F2F2F2, 11.5dp side margins, 4dp radius) */}
-          <div className="bg-[#F2F2F2] rounded-[4px] px-4 py-4">
+          <div className="bg-[#F5F5F5] rounded-[8px] mx-4 px-4 py-4">
             <div className="text-[15px] text-[#222222]">المبلغ</div>
             <div
               dir="ltr"
