@@ -360,7 +360,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({
         <div className="shrink-0 bg-[#FEC107]">
           <button
             type="submit"
-            className="w-full h-[38px] bg-[#FFC107] hover:bg-[#F2B700] active:bg-[#E5AD00] text-white text-[18px] font-normal flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-[#171717]"
+            className="w-full h-[38px] bg-[#FEC107] hover:bg-[#F2B700] active:bg-[#E5AD00] text-white text-[18px] font-normal flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-[#171717]"
           >
             إرسال
           </button>
