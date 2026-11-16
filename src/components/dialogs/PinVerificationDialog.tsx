@@ -125,7 +125,7 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
     setTimeout(() => {
       setIsSubmitting(false);
       onSuccess();
-    }, 180);
+    }, 900);
   };
 
   return (
@@ -205,6 +205,16 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
           ) : 'ارسل الطلب'}
         </button>
       </div>
+
+      {isSubmitting && (
+        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/35 p-4" role="status" aria-live="polite">
+          <div className="w-[210px] rounded-[4px] bg-white px-5 py-6 text-center shadow-2xl">
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-[4px] border-[#D9F4F7] border-t-[#00BCD5]" aria-hidden="true" />
+            <p className="text-[15px] text-[#171717]">جارٍ التحقق من الرمز السري</p>
+            <p className="mt-1 text-[12px] text-[#777777]">يرجى الانتظار</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
