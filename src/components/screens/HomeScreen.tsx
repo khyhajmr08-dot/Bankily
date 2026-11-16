@@ -33,7 +33,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   return (
     <div className="flex flex-col flex-1 h-full min-h-0 bg-[#FAFAFA] select-none overflow-y-auto">
       {/* Top Turquoise Header Section (205dp total height matching Bankily_f84d917f) */}
-      <header className="bg-[#00BCD5] text-white shrink-0">
+      <header className="bg-[#00BCD4] text-white shrink-0">
         {/* Title & Right Navigation Arrow (85dp) */}
         <div className="relative h-[85px] flex items-center justify-center px-3">
           <button
@@ -48,12 +48,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
 
         {/* Two Main Horizontal Action Buttons (89dp height, 0px sharp corners, 6.5dp outer padding, 12dp gap, 31dp bottom padding) */}
-        <div className="px-[6.5px] pb-[31px] grid grid-cols-2 gap-[12px]">
+        <div className="px-4 pb-4 grid grid-cols-2 gap-2">
           {/* Right Button (first in RTL): Send Money (#008CA0) */}
           <button
             type="button"
             onClick={() => onNavigateToSend()}
-            className="h-[89px] bg-[#008CA0] hover:bg-[#007D8F] active:scale-[0.985] rounded-none flex flex-col items-center justify-center gap-2 text-white transition-all focus-visible:outline-2 focus-visible:outline-white"
+            className="h-[100px] bg-[#00838F] hover:bg-[#007D8F] active:scale-[0.985] rounded-none flex flex-col items-center justify-center gap-2 text-white transition-all focus-visible:outline-2 focus-visible:outline-white"
           >
             <SendMoneyBillIcon className="w-[66px] h-[30px]" />
             <span className="text-[15px] font-normal leading-none">إرسال الأموال</span>
@@ -63,7 +63,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           <button
             type="button"
             onClick={onNavigateToRequest}
-            className="h-[89px] bg-[#FEC107] hover:bg-[#F2B700] active:scale-[0.985] rounded-none flex flex-col items-center justify-center gap-2 text-white transition-all focus-visible:outline-2 focus-visible:outline-white"
+            className="h-[100px] bg-[#FFC107] hover:bg-[#F2B700] active:scale-[0.985] rounded-none flex flex-col items-center justify-center gap-2 text-white transition-all focus-visible:outline-2 focus-visible:outline-white"
           >
             <RequestMoneyBillIcon className="w-[66px] h-[30px]" />
             <span className="text-[15px] font-normal leading-none">طلب المال</span>
@@ -72,12 +72,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       </header>
 
       {/* Light Gray Band 1: Quick Transfer (70dp height) */}
-      <div className="bg-[#EFEFEF] h-[70px] flex items-center justify-center shrink-0">
-        <h2 className="text-[16px] font-normal text-[#171717]">التحويل السريع</h2>
+      <div className="bg-[#F0F0F0] min-h-[48px] py-3 flex items-center justify-center shrink-0">
+        <h2 className="text-[16px] font-bold text-[#171717]">التحويل السريع</h2>
       </div>
 
       {/* QR Section (140dp height) */}
-      <div className="bg-[#FAFAFA] h-[140px] flex items-center justify-center shrink-0">
+      <div className="bg-white min-h-[160px] px-10 py-10 flex items-center justify-center shrink-0">
         <button
           type="button"
           onClick={() => setActiveModal('qr')}
@@ -94,7 +94,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       </div>
 
       {/* Bottom Section: Split Group Creation (opens BoardScreen) */}
-      <div className="bg-[#FAFAFA] flex-1 px-6 pt-5 pb-8 flex flex-col items-center">
+      <div className="bg-white flex-1 px-6 pt-5 pb-8 flex flex-col items-center">
         <p className="text-[13.5px] text-[#171717] text-center leading-relaxed">
           أنشئ مجموعة جديدة أو حدد مجموعة حالية لتقسيم المبلغ
         </p>
@@ -103,7 +103,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           type="button"
           onClick={onNavigateToBoard}
           aria-label="أنشئ مجموعة جديدة"
-          className="mt-7 w-[100px] h-[100px] border-[2.5px] border-dotted border-[#00BCD5] rounded-none flex items-center justify-center text-[#00BCD5] hover:bg-[#00BCD5]/5 active:scale-[0.97] transition-all focus-visible:outline-2 focus-visible:outline-[#00BCD5]"
+          className="mt-7 w-[150px] h-[150px] border-2 border-dashed border-[#00BCD4] rounded-[8px] flex items-center justify-center text-[#00BCD5] hover:bg-[#00BCD5]/5 active:scale-[0.97] transition-all focus-visible:outline-2 focus-visible:outline-[#00BCD5]"
         >
           <svg viewBox="0 0 36 36" fill="none" className="w-9 h-9" aria-hidden="true">
             <path
