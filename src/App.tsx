@@ -301,11 +301,12 @@ function MainApp() {
           ? ({ '--mobile-app-height': `${lockedMobileHeight}px` } as React.CSSProperties)
           : undefined
       }
-      className="min-h-[var(--mobile-app-height,100svh)] lg:min-h-dvh bg-[#FAFAFA] lg:bg-[#F5F7F8] lg:py-8 lg:px-6"
+      className="w-screen h-[var(--mobile-app-height,100dvh)] min-h-0 overflow-hidden bg-[#FAFAFA]"
     >
-      <div className="lg:max-w-6xl lg:mx-auto lg:grid lg:grid-cols-[360px_1fr] lg:gap-10 lg:items-start">
+      <div className="fixed bottom-2 left-2 z-[90] rounded-md bg-[#263238]/90 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white shadow-sm" aria-label="نموذج تجريبي">نموذج تجريبي</div>
+      <div className="w-full h-full">
         {/* Mobile fills 100% locked full-screen viewport with Safe Areas; Desktop renders 360x754 frame */}
-        <main className="relative w-full h-[var(--mobile-app-height,100svh)] lg:w-[360px] lg:h-[754px] lg:rounded-[12px] overflow-hidden lg:shadow-xl lg:border lg:border-slate-200 bg-[#FAFAFA] flex flex-col">
+        <main className="relative w-full h-full overflow-hidden bg-[#FAFAFA] flex flex-col">
           {/* Top Safe-Area Fill matching all 5 screens' #00BCD5 header */}
           <div
             className="h-[env(safe-area-inset-top,0px)] bg-[#00BCD5] shrink-0 lg:hidden"
@@ -397,7 +398,7 @@ function MainApp() {
         </main>
 
         {/* Desktop Companion Panel (Hidden on mobile viewports) */}
-        <div className="hidden lg:block">
+        <div className="hidden">
           <DesktopCompanionPanel
             currentScreen={screen}
             showPinDialog={showPinDialog}
