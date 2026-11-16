@@ -194,27 +194,9 @@ export const PinVerificationDialog: React.FC<PinVerificationDialogProps> = ({
           disabled={isSubmitting}
           className="w-full h-[54px] bg-[#00BCD5] hover:bg-[#00AAC2] active:bg-[#0099AF] disabled:opacity-70 text-white text-[15px] font-normal flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-[#171717]"
         >
-          {isSubmitting ? (
-            <span className="inline-flex items-center justify-center gap-2" role="status" aria-live="polite">
-              <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.28" strokeWidth="3" />
-                <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-              </svg>
-              جاري التحقق...
-            </span>
-          ) : 'ارسل الطلب'}
+          ارسل الطلب
         </button>
       </div>
-
-      {isSubmitting && (
-        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/35 p-4" role="status" aria-live="polite">
-          <div className="w-[210px] rounded-[4px] bg-white px-5 py-6 text-center shadow-2xl">
-            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-[4px] border-[#D9F4F7] border-t-[#00BCD5]" aria-hidden="true" />
-            <p className="text-[15px] text-[#171717]">جارٍ التحقق من الرمز السري</p>
-            <p className="mt-1 text-[12px] text-[#777777]">يرجى الانتظار</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
