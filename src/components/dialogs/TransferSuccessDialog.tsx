@@ -27,10 +27,6 @@ export const TransferSuccessDialog: React.FC<TransferSuccessDialogProps> = ({
             اكتملت المحاكاة
           </h2>
 
-          <p className="mb-3 text-[11px] leading-relaxed text-[#A35B00]">
-            تجربة توضيحية فقط — لا يوجد تحويل أموال حقيقي
-          </p>
-
           {/* Large Green Checkmark Circle */}
           <div className="mb-5">
             <SuccessCheckCircleIcon className="w-[68px] h-[68px]" />
