@@ -1,0 +1,6 @@
+{
+  "name": "تحويل الأموال — محاكاة تفاعلية",
+  "description": "تطبيق محاكاة تفاعلي متكامل لتحويل الأموال باللغة العربية (RTL) مع تأكيد التحويل والرمز السري وسجل العمليات المحلي.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#00BCD5" />
+    <title>بنكيلي — تحويل الأموال</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+        background: #fafafa;
+        color: #171717;
+      }
+      .shell {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+      .topbar {
+        background: #00bcd5;
+        color: #ffffff;
+        padding: calc(env(safe-area-inset-top, 0px) + 14px) 16px 14px;
+        text-align: center;
+        font-size: 19px;
+      }
+      .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 20px calc(env(safe-area-inset-bottom, 0px) + 24px);
+        text-align: center;
+      }
+      .icon {
+        width: 84px;
+        height: 84px;
+        border-radius: 20px;
+        object-fit: cover;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      }
+      h1 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 8px;
+      }
+      p {
+        font-size: 14px;
+        color: #555555;
+        line-height: 1.7;
+        margin: 0 0 24px;
+        max-width: 300px;
+      }
+      button {
+        width: 100%;
+        max-width: 280px;
+        height: 50px;
+        border: none;
+        background: #fec107;
+        color: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">بنكيلي</header>
+      <section class="content">
+        <img class="icon" src="/pwa-192x192.png" alt="بنكيلي" />
+        <h1>لا يوجد اتصال بالإنترنت</h1>
+        <p>
+          أنت غير متصل حالياً بالشبكة. تحقق من اتصال الهاتف ثم أعد المحاولة للوصول إلى أحدث نسخة من التطبيق.
+        </p>
+        <button type="button" onclick="window.location.reload()">إعادة المحاولة</button>
+      </section>
+    </main>
+  </body>
+</html>
