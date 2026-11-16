@@ -78,7 +78,7 @@ export const PWAInstallExperience: React.FC<PWAInstallExperienceProps> = ({
         <div className="w-full bg-[#F8F8F8] border-b border-[#EAEAEA] overflow-hidden">
           <img
             src="/assets/aistudio/IMG-20261116-WA0009_5d4a8b97.jpg"
-            alt="غلاف تطبيق بنكيلي"
+            alt="صورة توضيحية لمحاكاة تحويل الأموال"
             className="w-full h-[148px] object-cover object-center block"
           />
         </div>
@@ -88,15 +88,13 @@ export const PWAInstallExperience: React.FC<PWAInstallExperienceProps> = ({
           <div className="flex items-center gap-3.5">
             <img
               src="/pwa-192x192.png"
-              alt="أيقونة بنكيلي"
+              alt="أيقونة محاكاة بنكيلي"
               className="w-[58px] h-[58px] rounded-[12px] bg-white border border-[#E5E5E5] shadow-sm object-contain shrink-0"
             />
             <div className="min-w-0">
-              <h2 id="pwa-install-title" className="text-[18px] font-semibold text-[#171717]">
-                بنكيلي
-              </h2>
+              <h2 id="pwa-install-title" className="text-[18px] font-semibold text-[#171717]">محاكاة بنكيلي</h2>
               <p className="text-[12.5px] text-[#008CA0] font-medium">
-                الخدمات المالية الرقمية — تشغيل مستقل
+                تجربة تجريبية غير رسمية
               </p>
             </div>
           </div>
@@ -194,7 +192,7 @@ export const PWAInstallExperience: React.FC<PWAInstallExperienceProps> = ({
               download="bankily-android-project.zip"
               className="w-full h-[40px] bg-white hover:bg-[#F7FDFE] border border-[#E0E0E0] text-[#008CA0] text-[13.5px] font-medium flex items-center justify-center transition-colors"
             >
-              تنزيل مشروع Android Studio (ZIP) لبناء APK مجاناً
+              تنزيل ملفات مشروع Android التجريبي
             </a>
 
             <button
